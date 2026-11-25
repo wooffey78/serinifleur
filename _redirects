@@ -1,0 +1,17 @@
+# _redirects — Netlify
+# Fichier de configuration des redirections pour Netlify
+# Remplace le .htaccess Apache pour un hébergement Netlify
+
+# ── Redirection HTTP → HTTPS (gérée automatiquement par Netlify) ──
+# Netlify force HTTPS par défaut sur tous les domaines custom.
+# Aucune règle manuelle nécessaire.
+
+# ── Redirection www → non-www (ou l'inverse selon préférence) ──
+# Configurable dans les paramètres Netlify > Domain management
+# Exemple : https://www.serinifleur.fr → https://serinifleur.fr
+
+# ── Pages d'erreur personnalisées ──
+/404   /index.html   404
+
+# ── SPA Fallback (non nécessaire ici, site statique multi-pages) ──
+# /* /index.html 200

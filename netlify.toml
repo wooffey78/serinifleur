@@ -1,0 +1,66 @@
+# netlify.toml — SeriniFleur
+# Configuration complète de déploiement Netlify
+# Remplace le .htaccess Apache
+
+# ============================================================
+# BUILD (non utilisé ici — site statique pur)
+# ============================================================
+[build]
+  publish = "."
+
+# ============================================================
+# EN-TÊTES HTTP — Sécurité, Performance, Cache
+# ============================================================
+
+# Assets statiques — cache long terme (1 an)
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# CSS & JS — cache moyen terme avec revalidation
+[[headers]]
+  for = "/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, must-revalidate"
+
+[[headers]]
+  for = "/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, must-revalidate"
+
+# Pages HTML — pas de cache (toujours frais)
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+
+# En-têtes de sécurité globaux
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+
+# ============================================================
+# REDIRECTIONS
+# ============================================================
+
+# Redirection HTTP → HTTPS (Netlify gère automatiquement)
+# Redirection www → apex (configurer dans Dashboard > Domains)
+
+# Page 404 personnalisée
+[[redirects]]
+  from = "/*"
+  to   = "/index.html"
+  status = 404
+  force = false
+
+# ============================================================
+# COMPRESSION (activée par défaut sur Netlify)
+# Brotli et Gzip sont appliqués automatiquement.
+# ============================================================
